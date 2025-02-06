@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34723.18
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hotel.Atr3.RealPortal", "Hotel.Atr3.RealPortal\Hotel.Atr3.RealPortal.csproj", "{DE56DC3C-EDF0-4CAB-A0C7-71FCB68A588B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DE56DC3C-EDF0-4CAB-A0C7-71FCB68A588B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DE56DC3C-EDF0-4CAB-A0C7-71FCB68A588B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DE56DC3C-EDF0-4CAB-A0C7-71FCB68A588B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DE56DC3C-EDF0-4CAB-A0C7-71FCB68A588B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F7C19C3F-FD27-4827-92F2-CF578E2CA8D8}
+	EndGlobalSection
+EndGlobal
