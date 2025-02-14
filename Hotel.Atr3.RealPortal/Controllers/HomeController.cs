@@ -1,4 +1,5 @@
-﻿using Hotel.Atr3.RealPortal.Models;
+﻿using FluentValidation;
+using Hotel.Atr3.RealPortal.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -21,22 +22,62 @@ namespace Hotel.Atr3.RealPortal.Controllers
             return View();
         }
 
-        public IActionResult Contact(Message message)
+        public IActionResult Contact()
         {
-            message = new Message();
-            return View(message);
+            return View();
         }
 
         [HttpPost]
-        //public IActionResult AddMessage(string name, string email, string message)
-        public IActionResult AddMessage(Message userMessage)
+        public IActionResult Contact(Message userMessage)
         {
-            //write to DB
-            //sent email
-            TempData["ResultAddMessage"] = "Данные успешно добавлены";
-            //ViewBag.ResultAddMessage = "Данные успешно добавлены";
+            //1
+            //if (string.IsNullOrWhiteSpace(userMessage.name))
+            //{
+            //    ModelState.AddModelError("name", "Поле Name обязательно к заполнению");
+            //}
 
-            return RedirectToAction("Contact", userMessage);
+            MessageValidator rules = new MessageValidator();
+            var result = rules.Validate(userMessage);
+
+            //список ошиббок при проверки
+            var errosrs = result.Errors;
+
+            //генерирует ошибку, выдвет сиключение
+            rules.ValidateAndThrow(userMessage);
+
+            //throw new Exception();
+
+            if(result.IsValid)
+            //if (ModelState.IsValid)
+            {
+                return View();
+            }
+            else
+            {
+                return View(userMessage);
+            }
+
+            
+        }
+
+
+        //NewsLetterSignUp
+        [HttpPost]
+        public IActionResult NewsLetterSignUp(string email, string phone)
+        {
+            if(string.IsNullOrWhiteSpace(email))
+            {
+                ModelState.AddModelError("email","Поле обязательно должно быть заполненым");
+            }
+
+            if(ModelState.IsValid)
+            {
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                return View("Contact");
+            }            
         }
     }
 }

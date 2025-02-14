@@ -42,28 +42,41 @@
                 </div>
             </div>
             <div class="col-md-8">
-                <h4 class="contact-title">send your massage - @ViewBag.ResultAddMessage - @ViewData["ResultAddMessage"] </h4>
+                <h4 class="contact-title">send your massage</h4>
                 <form id="contact-form"
                       asp-controller="home"
-                      asp-action="addmessage"
+                      asp-action="contact"
                       method="post">
                     <div class="row">
                         <div class="col-md-6">
-                            <input type="text" name="name" placeholder="Enter Name">
+                            <input type="text" asp-for="name" placeholder="Enter Name">
+                            <span asp-validation-for="name" class="text-danger"></span>
                         </div>
                         <div class="col-md-6">
-                            <input type="email" 
-                                    name="email" 
-                                    value="@Model.email"
-                                    placeholder="Enter Email">
+                            <input type="text" asp-for="email" placeholder="Enter Email">
+                            <span asp-validation-for="email" class="text-danger"></span>
                         </div>
+
+                        <div class="col-md-6">
+                            <input type="text" asp-for="createDate" placeholder="Enter createDate">
+                            <span asp-validation-for="createDate" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-6">
+                            <input type="text" asp-for="city" placeholder="Enter city">
+                            <span asp-validation-for="city" class="text-danger"></span>
+                        </div>
+
+
                         <div class="col-md-12">
-                            <textarea name="message" cols="30" rows="10" placeholder="Message here"></textarea>
+                            <textarea asp-for="message"
+                                      cols="30" rows="10" placeholder="Message here"></textarea>
+
                             <button type="submit" class="default-btn">SUBMIT</button>
                         </div>
                     </div>
                 </form>
-                <p class="form-messege"></p>
+                @* <p class="form-messege"></p> *@
+                <div asp-validation-summary="All" class="form-messege"></div> 
             </div>
         </div>
     </div>
@@ -127,10 +140,23 @@
                 <div class="newsletter-container">
                     <h3>NewsLetter Sign-Up</h3>
                     <div class="newsletter-form">
-                        <form action="#" id="mc-form" class="mc-form fix">
-                            <input id="mc-email" type="email" name="email" placeholder="Enter your E-mail">
+
+                        <form asp-controller="home"
+                              asp-action="NewsLetterSignUp"
+                              id="mc-form"
+                              class="mc-form fix"
+                        method="post">
+
+                            <input id="mc-email" type="text" name="email" placeholder="Enter your E-mail">
+                            <input id="mc-email" type="text" name="phone" placeholder="Enter your Phone">
+
+                           
                             <button id="mc-submit" type="submit" class="default-btn">subcribes</button>
+
+                            <br />
+                            <div asp-validation-summary="All" class="form-messege"></div>
                         </form>
+
                         <!-- mailchimp-alerts Start -->
                         <div class="mailchimp-alerts">
                             <div class="mailchimp-submitting"></div><!-- mailchimp-submitting end -->
@@ -145,8 +171,6 @@
     </div>
 </section>
 <!-- Newsletter Area End -->
-
-
 @section Scripts
 {
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDSLSFRa0DyBj9VGzT7GM6SFbSMcG0YNBM"></script>
