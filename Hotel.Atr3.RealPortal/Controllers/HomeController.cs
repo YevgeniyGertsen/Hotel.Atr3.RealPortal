@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using Hotel.Atr3.RealPortal.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -8,16 +9,27 @@ namespace Hotel.Atr3.RealPortal.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private UserManager<AppUser> _userManager;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger,
+            UserManager<AppUser> userManager)
         {
             _logger = logger;
+            _userManager = userManager;
         }
 
         //[HttpGet]
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            ViewBag.Title = "Home";
+            //AppUser user = new AppUser();
+            //user.UserName = "secondAdmin";
+            //user.Email = "gersen.e.a@gmail.com";
+            //var result = await _userManager.CreateAsync(user, "Gg110188@");
+
+            //if (result.Succeeded)
+            //{
+
+            //}
 
             return View();
         }
@@ -78,6 +90,23 @@ namespace Hotel.Atr3.RealPortal.Controllers
             {
                 return View("Contact");
             }            
+        }
+
+
+        public JsonResult SetCity(string city)
+        {
+            try
+            {
+                CookieOptions option = new CookieOptions();
+                option.Expires = DateTime.Now.AddMinutes(1);
+
+                Response.Cookies.Append("city", city, option);
+                return Json(city);
+            }
+            catch (Exception ex)
+            {
+                return Json(ex.Message);
+            }
         }
     }
 }

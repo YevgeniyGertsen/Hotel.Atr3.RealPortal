@@ -5,6 +5,10 @@ namespace Hotel.Atr3.RealPortal.Controllers
 {
     public class EventController : Controller
     {
+
+
+
+
         public IActionResult Index()
         {
             #region GET data from DataBase

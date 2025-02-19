@@ -1,4 +1,5 @@
 ﻿using Hotel.Atr3.RealPortal.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 
@@ -6,6 +7,7 @@ namespace Hotel.Atr3.RealPortal.Controllers
 {
     public class TeamController : Controller
     {
+        [Authorize]
         public IActionResult Index()
         {
             #region GetTeamsFromDataBase
