@@ -10,17 +10,25 @@ namespace Hotel.Atr3.RealPortal.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private UserManager<AppUser> _userManager;
+        private readonly IMessage _sender;
 
         public HomeController(ILogger<HomeController> logger,
-            UserManager<AppUser> userManager)
+            UserManager<AppUser> userManager,
+            IMessage sender)
         {
             _logger = logger;
             _userManager = userManager;
+            _sender = sender;
         }
 
         //[HttpGet]
         public async Task<IActionResult> Index()
         {
+            _logger.LogCritical("Test logger - LogCritical");
+            _logger.LogError("Test logger - LogError");
+            _logger.LogInformation("Test logger - LogInformation");
+            _logger.LogDebug("Test logger - LogDebug");
+
             //AppUser user = new AppUser();
             //user.UserName = "secondAdmin";
             //user.Email = "gersen.e.a@gmail.com";
@@ -42,6 +50,10 @@ namespace Hotel.Atr3.RealPortal.Controllers
         [HttpPost]
         public IActionResult Contact(Message userMessage)
         {
+            //EmailSender sender = new EmailSender();
+            //SmsSender sender = new SmsSender();
+
+
             //1
             //if (string.IsNullOrWhiteSpace(userMessage.name))
             //{
@@ -55,21 +67,21 @@ namespace Hotel.Atr3.RealPortal.Controllers
             var errosrs = result.Errors;
 
             //генерирует ошибку, выдвет сиключение
-            rules.ValidateAndThrow(userMessage);
+            //rules.ValidateAndThrow(userMessage);
 
             //throw new Exception();
 
             if(result.IsValid)
             //if (ModelState.IsValid)
             {
+               _sender.SendMessage(userMessage.email, userMessage.message, "");
+
                 return View();
             }
             else
             {
                 return View(userMessage);
-            }
-
-            
+            }            
         }
 
 
