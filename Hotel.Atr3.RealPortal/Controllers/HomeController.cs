@@ -125,10 +125,10 @@ namespace Hotel.Atr3.RealPortal.Controllers
         [HttpPost]
         public JsonResult ChangeCulture(string culture)
         {
-            Response.Cookies.Append(
+            Response.Cookies.Append(                
                 CookieRequestCultureProvider.DefaultCookieName,
                 CookieRequestCultureProvider.MakeCookieValue(new RequestCulture(culture)),
-                new CookieOptions { Expires = DateTime.Now.AddMonths(1) });
+                new CookieOptions {Expires = DateTime.Now.AddMonths(1) });
 
             return Json(culture);
         }

@@ -42,14 +42,14 @@
                 </div>
             </div>
             <div class="col-md-8">
-                <h4 class="contact-title">@localizer["send_your_massage"]</h4>
+                <h4 class="contact-title">send_your_massage</h4>
                 <form id="contact-form"
                       asp-controller="home"
                       asp-action="contact"
                       method="post">
                     <div class="row">
                         <div class="col-md-6">
-                            <input type="text" asp-for="name" placeholder="@localizer["enter_name"]">
+                            <input type="text" asp-for="name" placeholder="enter_name">
                             <span asp-validation-for="name" class="text-danger"></span>
                         </div>
                         <div class="col-md-6">

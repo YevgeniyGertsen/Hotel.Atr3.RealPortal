@@ -1,4 +1,5 @@
 ﻿using Hotel.Atr3.RealPortal.Models;
+using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
@@ -10,9 +11,10 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews()
-    .AddViewLocalization();
+                .AddViewLocalization();
 
-#region Localize
+#region Localizer
+
 builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
 
 builder.Services.Configure<RequestLocalizationOptions>(options => 
@@ -28,6 +30,7 @@ builder.Services.Configure<RequestLocalizationOptions>(options =>
     options.SupportedCultures = supportedCulture;
     options.SupportedUICultures = supportedCulture;
 });
+
 #endregion
 
 #region Auth
@@ -76,14 +79,14 @@ builder.Host.UseSerilog();
 
 var app = builder.Build();
 
-#region Localization Middleware
+#region Localizer
 var supportedCulture = new[] { "kk-KZ", "ru-RU", "en-US" };
-var localizationOptions = new RequestLocalizationOptions()
+var localizerOptions = new RequestLocalizationOptions()
     .SetDefaultCulture("kk-KZ")
     .AddSupportedCultures(supportedCulture)
     .AddSupportedUICultures(supportedCulture);
 
-app.UseRequestLocalization(localizationOptions);
+app.UseRequestLocalization(localizerOptions);
 #endregion
 
 

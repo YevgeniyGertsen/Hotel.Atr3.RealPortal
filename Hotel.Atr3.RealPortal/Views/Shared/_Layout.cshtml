@@ -281,18 +281,18 @@
             });
         }
 
-        function ChangeCulture(culture) {
+        function ChangeCulture(culture) 
+        {
             $.ajax({
                 url: '/Home/ChangeCulture',
                 data: { culture: culture },
                 dataType: 'JSON',
-                type: 'POST',
-                success: function () {
+                method: 'POST',
+                success: function(){
                     location.reload();
                 }
             });
         }
-
     </script>
 
     <script src="~/js/main.js"></script>
