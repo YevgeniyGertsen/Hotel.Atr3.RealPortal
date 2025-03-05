@@ -1,9 +1,9 @@
 ﻿<div class="main-menu hidden-xs">
     <nav>
         <ul>
-            <li><a href="/home/index">HOME</a></li>
+            <li><a href="/home/index">@localizer["Home"]</a></li>
             <li>
-                <a href="/room/index">ROOMS</a>
+                <a href="/room/index">@localizer["Room"]</a>
                 <ul class="submenu">
                     <li><a href="/room/RoomDetails">ROOM LIST</a></li>
                     <li><a href="/room/RoomList">ROOM DETAILS</a></li>
@@ -18,10 +18,8 @@
                 @Html.ActionLink("TEAM", "Index", "Team")
             </li>
             <li>
-                @Html.ActionLink("CONTACT", "Contact", "Home")
+                @Html.ActionLink(localizer["Contact"].Value.ToString(), "Contact", "Home")
             </li>
-
-
             @if (User.Identity.IsAuthenticated)
             {
                 <li>
@@ -37,8 +35,6 @@
                     <a href="/Account/LogIn">LogIn</a>
                 </li>
             }
-
-
         </ul>
     </nav>
 </div>

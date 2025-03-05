@@ -1,0 +1,16 @@
+﻿@using Microsoft.AspNetCore.Builder
+@using Microsoft.AspNetCore.Localization
+@using Microsoft.Extensions.Options
+@using System.Globalization
+
+@inject IOptions<RequestLocalizationOptions> locilizationOptions
+
+<span> | </span>
+<span class="text-theme">Lang: </span>
+@foreach (CultureInfo item in locilizationOptions.Value.SupportedUICultures)
+{
+    <span style="cursor: pointer" onclick="ChangeCulture('@item.Name')">
+        @item.Name.Substring(0, 2)
+    </span>
+    <span> | </span>
+}

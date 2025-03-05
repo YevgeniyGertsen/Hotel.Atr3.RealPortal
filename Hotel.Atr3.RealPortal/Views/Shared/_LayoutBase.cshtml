@@ -38,8 +38,10 @@
                 <div class="col-lg-7 col-md-8 col-sm-8 hidden-xs">
                     <div class="header-top fix">
                         <div class="header-contact">
-                            <span class="text-theme">Contact:</span>
-                            <span>0088-234-675-827</span>
+                            <span class="text-theme">City: </span>
+                            <span id="spanCity" style="cursor:pointer">- none -</span>
+
+                            @Html.Partial("_Langs")
                         </div>
                         <div class="header-links">
                             <a href="https://www.facebook.com/"><i class="zmdi zmdi-facebook"></i></a>
@@ -219,7 +221,19 @@
     <script src="~/js/plugins.js"></script>
 
     @RenderSection("Scripts", false)
-
+    <script>
+        function ChangeCulture(culture) {
+            $.ajax({
+                url: '/Home/ChangeCulture',
+                data: { culture: culture },
+                dataType: 'JSON',
+                type: 'POST',
+                success: function () {
+                    location.reload();
+                }
+            });
+        }
+    </script>
     <script src="~/js/main.js"></script>
 </body>
 </html>

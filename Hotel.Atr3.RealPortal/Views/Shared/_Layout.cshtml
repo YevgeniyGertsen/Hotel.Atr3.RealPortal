@@ -38,12 +38,10 @@
                 <div class="col-lg-7 col-md-8 col-sm-8 hidden-xs">
                     <div class="header-top fix">
                         <div class="header-contact">
-                            <span class="text-theme">Contact:</span>
-                            <span>0088-234-675-827</span>
-
-                            <span> | </span>
                             <span class="text-theme">City: </span>
                             <span id="spanCity" style="cursor:pointer">- none -</span>
+
+                            @Html.Partial("_Langs")
                         </div>
                         <div class="header-links">
                             <a href="https://www.facebook.com/"><i class="zmdi zmdi-facebook"></i></a>
@@ -250,16 +248,13 @@
     @RenderSection("Scripts", false)
 
     <script>
-        $(document).ready(function () 
-        {
+        $(document).ready(function () {
             var city = '@Context.Request.Cookies["city"]';
 
-            if (city!=="")
-            {
+            if (city !== "") {
                 $('#spanCity').html(city);
             }
-            else
-            {
+            else {
                 $('#cityModal').modal('show');
             }
 
@@ -280,9 +275,20 @@
                     $('#spanCity').html(data);
                     $('#cityModal').modal('hide');
                 },
-                error: function () 
-                {
+                error: function () {
                     $('#cityModal').modal('hide');
+                }
+            });
+        }
+
+        function ChangeCulture(culture) {
+            $.ajax({
+                url: '/Home/ChangeCulture',
+                data: { culture: culture },
+                dataType: 'JSON',
+                type: 'POST',
+                success: function () {
+                    location.reload();
                 }
             });
         }

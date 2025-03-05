@@ -9,7 +9,7 @@ namespace Hotel.Atr3.RealPortal.Models
         {
             var fromAddress = new MailAddress("gersen.e.a@gmail.com", "From Name");
             var toAddress = new MailAddress(to, "To Name");
-            const string fromPassword = "";
+            const string fromPassword = "pcvm qayr qbre bsjz";
 
             var smtp = new SmtpClient
             {

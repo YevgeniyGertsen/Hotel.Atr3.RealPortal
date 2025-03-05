@@ -1,14 +1,36 @@
 ﻿using Hotel.Atr3.RealPortal.Models;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 using Serilog.Sinks.MSSqlServer;
+using System.Globalization;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews()
+    .AddViewLocalization();
 
+#region Localize
+builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
+
+builder.Services.Configure<RequestLocalizationOptions>(options => 
+{
+    var supportedCulture = new[]
+    {
+        new CultureInfo("kk-KZ"),
+        new CultureInfo("ru-RU"),
+        new CultureInfo("en-US")
+    };
+
+    options.DefaultRequestCulture = new RequestCulture(culture: "kk-KZ", uiCulture: "kk-KZ");
+    options.SupportedCultures = supportedCulture;
+    options.SupportedUICultures = supportedCulture;
+});
+#endregion
+
+#region Auth
 builder.Services.AddDbContext<AppIdentityDbContext>
     (options => options.UseSqlServer(
         builder.Configuration["ConnectionStrings:DefaultConnection"]));
@@ -16,15 +38,14 @@ builder.Services.AddDbContext<AppIdentityDbContext>
 builder.Services.AddIdentity<AppUser, IdentityRole>()
     .AddEntityFrameworkStores<AppIdentityDbContext>()
     .AddDefaultTokenProviders();
+#endregion
 
+#region DI
 builder.Services.AddTransient<IMessage, SmsSender>();
 //builder.Services.AddTransient<IMessage, EmailSender>();
+#endregion
 
-
-
-
-
-
+#region Logging
 //1 вариант логирования
 //builder.Logging.ClearProviders();
 //builder.Logging.AddConsole();
@@ -47,9 +68,24 @@ Log.Logger = new LoggerConfiguration()
     .CreateLogger();
 
 builder.Host.UseSerilog();
+#endregion
+
+
+
 
 
 var app = builder.Build();
+
+#region Localization Middleware
+var supportedCulture = new[] { "kk-KZ", "ru-RU", "en-US" };
+var localizationOptions = new RequestLocalizationOptions()
+    .SetDefaultCulture("kk-KZ")
+    .AddSupportedCultures(supportedCulture)
+    .AddSupportedUICultures(supportedCulture);
+
+app.UseRequestLocalization(localizationOptions);
+#endregion
+
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

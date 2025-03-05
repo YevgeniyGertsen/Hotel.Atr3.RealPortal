@@ -1,6 +1,7 @@
 ﻿using FluentValidation;
 using Hotel.Atr3.RealPortal.Models;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -119,6 +120,17 @@ namespace Hotel.Atr3.RealPortal.Controllers
             {
                 return Json(ex.Message);
             }
+        }
+
+        [HttpPost]
+        public JsonResult ChangeCulture(string culture)
+        {
+            Response.Cookies.Append(
+                CookieRequestCultureProvider.DefaultCookieName,
+                CookieRequestCultureProvider.MakeCookieValue(new RequestCulture(culture)),
+                new CookieOptions { Expires = DateTime.Now.AddMonths(1) });
+
+            return Json(culture);
         }
     }
 }
