@@ -1,8 +1,10 @@
 ﻿using Hotel.Atr3.RealPortal.Models;
+using Hotel.Atr3.RealPortal.Service;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Serilog;
 using Serilog.Sinks.MSSqlServer;
 using System.Globalization;
@@ -13,25 +15,59 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews()
                 .AddViewLocalization();
 
+
+#region DI
+builder.Services.AddTransient<IMessage, SmsSender>();
+//builder.Services.AddTransient<IMessage, EmailSender>();
+builder.Services.AddScoped<ILanguageService, LanguageService>();
+builder.Services.AddScoped<ILocalizationService, LocalizationService>();
+#endregion
+
+builder.Services.AddDbContext<AppDbContext>
+    (options => options.UseSqlServer(
+        builder.Configuration.GetConnectionString("DefaultConnection")));
+
+
 #region Localizer
 
-builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
+//через файлы Resources
+//builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
 
-builder.Services.Configure<RequestLocalizationOptions>(options => 
+//builder.Services.Configure<RequestLocalizationOptions>(options => 
+//{
+//    var supportedCulture = new[]
+//    {
+//        new CultureInfo("kk-KZ"),
+//        new CultureInfo("ru-RU"),
+//        new CultureInfo("en-US")
+//    };
+
+//    options.DefaultRequestCulture = new RequestCulture(culture: "kk-KZ", uiCulture: "kk-KZ");
+//    options.SupportedCultures = supportedCulture;
+//    options.SupportedUICultures = supportedCulture;
+//});
+
+
+//через базу данных
+var serviceProvider = builder.Services.BuildServiceProvider();
+var languageService = serviceProvider.GetService<ILanguageService>();
+
+var languages = languageService.GetLanguages();
+var culture = languages.Select(x => new CultureInfo(x.Culture)).ToList();
+var defaultCulture = languages.FirstOrDefault(f => f.IsDefaultCulture);
+
+builder.Services.Configure<RequestLocalizationOptions>(options =>
 {
-    var supportedCulture = new[]
-    {
-        new CultureInfo("kk-KZ"),
-        new CultureInfo("ru-RU"),
-        new CultureInfo("en-US")
-    };
+    options.DefaultRequestCulture = 
+    new RequestCulture(culture: defaultCulture.Culture,
+                       uiCulture: defaultCulture.Culture);
 
-    options.DefaultRequestCulture = new RequestCulture(culture: "kk-KZ", uiCulture: "kk-KZ");
-    options.SupportedCultures = supportedCulture;
-    options.SupportedUICultures = supportedCulture;
+    options.SupportedCultures = culture;
+    options.SupportedUICultures = culture;
 });
 
 #endregion
+
 
 #region Auth
 builder.Services.AddDbContext<AppIdentityDbContext>
@@ -43,10 +79,6 @@ builder.Services.AddIdentity<AppUser, IdentityRole>()
     .AddDefaultTokenProviders();
 #endregion
 
-#region DI
-builder.Services.AddTransient<IMessage, SmsSender>();
-//builder.Services.AddTransient<IMessage, EmailSender>();
-#endregion
 
 #region Logging
 //1 вариант логирования
