@@ -3,6 +3,7 @@ using Hotel.Atr3.RealPortal.Service;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Serilog;
@@ -134,8 +135,40 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
+#region routing templates
+////rooms → Показать все номера
+//app.MapControllerRoute(
+//	name: "rooms",
+//	pattern: "rooms",
+//	defaults: new { controller = "Room", action = "Index" });
+
+////rooms?category=luxury → Показать номера категории "люкс"
+//app.MapControllerRoute(
+//	name: "GetRoomLuxury",
+//	pattern: "room/category/{category=luxury}",
+//	defaults: new { controller = "Room", action = "RoomList" });
+
+////rooms?category=standard&capacity=2 → Показать стандартные номера на 2 человек
+//app.MapControllerRoute(
+//	name: "GetRoomLuxury",
+//	pattern: "room/category/{category}/{capacity:int}",
+//	defaults: new { controller = "Room", action = "RoomList" });
+
+////rooms/101 → Показать номер с ID 101
+//app.MapControllerRoute(
+//	name: "RoomDetails",
+//	pattern: "room/{roomId:int}",
+//	defaults: new { controller = "Room", action = "RoomDetails" });
+
+//app.MapControllerRoute(
+//	name: "contactUs",
+//	pattern: "contact-us",
+//    defaults: new { controller = "Home", action="Contact"} );
+
 app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+	name: "default",
+	pattern: "{controller=Home}/{action=Index}/{id?}");
+
+#endregion
 
 app.Run();

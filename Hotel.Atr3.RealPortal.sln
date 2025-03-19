@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34723.18
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hotel.Atr3.RealPortal", "Hotel.Atr3.RealPortal\Hotel.Atr3.RealPortal.csproj", "{DE56DC3C-EDF0-4CAB-A0C7-71FCB68A588B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hotel.Atr3.RealPortal", "Hotel.Atr3.RealPortal\Hotel.Atr3.RealPortal.csproj", "{DE56DC3C-EDF0-4CAB-A0C7-71FCB68A588B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hotel.Atr3.Admin", "Hotel.Atr3.Admin\Hotel.Atr3.Admin.csproj", "{B98CE1D8-6DAA-4544-A2C4-D7B408A606F2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{DE56DC3C-EDF0-4CAB-A0C7-71FCB68A588B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DE56DC3C-EDF0-4CAB-A0C7-71FCB68A588B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DE56DC3C-EDF0-4CAB-A0C7-71FCB68A588B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B98CE1D8-6DAA-4544-A2C4-D7B408A606F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B98CE1D8-6DAA-4544-A2C4-D7B408A606F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B98CE1D8-6DAA-4544-A2C4-D7B408A606F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B98CE1D8-6DAA-4544-A2C4-D7B408A606F2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
