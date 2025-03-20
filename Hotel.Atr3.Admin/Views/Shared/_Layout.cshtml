@@ -84,20 +84,23 @@ License: You must have a valid license purchased only from themeforest(the above
 				<!-- BEGIN NOTIFICATION DROPDOWN -->
 			
 				<!-- BEGIN USER LOGIN DROPDOWN -->
-				<!-- DOC: Apply "dropdown-dark" class after below "dropdown-extended" to change the dropdown styte -->
-				<li class="dropdown dropdown-user">
-					<a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
-					<img alt="" class="img-circle" src="~/assets/admin/layout/img/avatar3_small.jpg"/>
-					<span class="username username-hide-on-mobile">
-					Nick </span>
-					<i class="fa fa-angle-down"></i>
-					</a>
-				</li>
-				<!-- END USER LOGIN DROPDOWN -->
+					@if (User.Identity.IsAuthenticated)
+					{
+						<!-- DOC: Apply "dropdown-dark" class after below "dropdown-extended" to change the dropdown styte -->
+						<li class="dropdown dropdown-user">
+							<a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+								<img alt="" class="img-circle" src="~/assets/admin/layout/img/avatar3_small.jpg"/>
+								<span class="username username-hide-on-mobile">
+									@User.Identity.Name </span>
+								<i class="fa fa-angle-down"></i>
+							</a>
+						</li>
+					}
+					<!-- END USER LOGIN DROPDOWN -->
 				<!-- BEGIN QUICK SIDEBAR TOGGLER -->
 				<!-- DOC: Apply "dropdown-dark" class after below "dropdown-extended" to change the dropdown styte -->
 				<li class="dropdown dropdown-quick-sidebar-toggler">
-					<a href="javascript:;" class="dropdown-toggle">
+						<a href="@Url.Action("Logout", "Account")" class="dropdown-toggle">
 					<i class="icon-logout"></i>
 					</a>
 				</li>

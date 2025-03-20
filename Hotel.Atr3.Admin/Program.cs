@@ -1,7 +1,25 @@
+using Hotel.Atr3.Admin.Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+#region Auth
+builder.Services.AddDbContext<AppIdentityDbContext>
+    (options => options.UseSqlServer(
+        builder.Configuration["ConnectionStrings:DefaultConnection"]));
+
+builder.Services.AddIdentity<AppUser, IdentityRole>()
+    .AddEntityFrameworkStores<AppIdentityDbContext>()
+    .AddDefaultTokenProviders();
+
+
+builder.Services.ConfigureApplicationCookie(opts => opts.LoginPath = "/Account/Login");
+
+#endregion
 
 var app = builder.Build();
 
@@ -14,6 +32,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
