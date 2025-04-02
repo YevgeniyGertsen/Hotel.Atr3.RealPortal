@@ -1,4 +1,5 @@
-﻿using Hotel.Atr3.RealPortal.Models;
+﻿using Hotel.Atr3.RealPortal.AppFilter;
+using Hotel.Atr3.RealPortal.Models;
 using Hotel.Atr3.RealPortal.Service;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Identity;
@@ -13,8 +14,12 @@ using System.Globalization;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddControllersWithViews()
-                .AddViewLocalization();
+builder.Services.AddControllersWithViews(options => 
+{
+    options.Filters.Add<TimeElapsedFilter>();    
+    options.Filters.Add<CatchError>();    
+})
+.AddViewLocalization();
 
 
 #region DI

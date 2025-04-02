@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using Hotel.Atr3.RealPortal.AppFilter;
 using Hotel.Atr3.RealPortal.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
@@ -7,6 +8,7 @@ using System.Diagnostics;
 
 namespace Hotel.Atr3.RealPortal.Controllers
 {
+    //[TypeFilter(typeof(TimeElapsedFilter))]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -22,9 +24,11 @@ namespace Hotel.Atr3.RealPortal.Controllers
             _sender = sender;
         }
 
-        //[HttpGet]
+
         public async Task<IActionResult> Index()
         {
+            throw new Exception("Test Exception");
+
             _logger.LogCritical("Test logger - LogCritical");
             _logger.LogError("Test logger - LogError");
             _logger.LogInformation("Test logger - LogInformation");
@@ -41,12 +45,22 @@ namespace Hotel.Atr3.RealPortal.Controllers
             //}
 
             return View();
+
         }
 
+
+        //[IEFilter]
+        //->START [ResourceFilter]:OnResourceExecuting
+        //->START [ActionFilter]:TimeElapsedFilter
         public IActionResult Contact()
         {
+            Thread.Sleep(1000);
+            var test = "";
+            //-> START [ResourceFilter]:OnResourceExecuted
             return View();
         }
+        //->START [ActionFilter]:TimeElapsedFilter
+
 
         [HttpPost]
         public IActionResult Contact(Message userMessage)
@@ -122,6 +136,7 @@ namespace Hotel.Atr3.RealPortal.Controllers
             }
         }
 
+
         [HttpPost]
         public JsonResult ChangeCulture(string culture)
         {
@@ -131,6 +146,11 @@ namespace Hotel.Atr3.RealPortal.Controllers
                 new CookieOptions {Expires = DateTime.Now.AddMonths(1) });
 
             return Json(culture);
+        }
+
+        public IActionResult Error(string message)
+        {
+            return View("Error", message);
         }
     }
 }
