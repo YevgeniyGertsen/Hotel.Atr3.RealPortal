@@ -1,4 +1,5 @@
 ﻿using Hotel.Atr3.RealPortal.AppFilter;
+using Hotel.Atr3.RealPortal.AppMidleware;
 using Hotel.Atr3.RealPortal.Models;
 using Hotel.Atr3.RealPortal.Service;
 using Microsoft.AspNetCore.Components.Forms;
@@ -139,6 +140,16 @@ app.UseRouting();
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.Use(async (context, next) =>
+{
+
+    await next.Invoke();
+});
+
+//app.UseMiddleware<UseWorkTime>();
+app.UseWorkTime();
+
 
 #region routing templates
 ////rooms → Показать все номера
