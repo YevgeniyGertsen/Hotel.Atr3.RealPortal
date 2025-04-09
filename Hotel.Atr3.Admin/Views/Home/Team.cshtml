@@ -1,0 +1,46 @@
+﻿@model List<Team>
+
+@{
+    ViewData["Title"] = "Список сотрудников";
+    ViewData["Description"] = "список сотрудников";
+}
+<table class="table table-striped table-bordered table-advance table-hover">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Create At</th>
+            <th>Greated By</th>
+            <th>FirstName</th>
+            <th>SecondName</th>
+            <th>MiddleName</th>
+            <th>AboutTeam</th>
+            <th>Position</th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Id</td>
+                <td>@item.CreateAt</td>
+                <td>@item.CreatedBy</td>
+                <td>@item.FirstName</td>
+                <td>@item.SecondName</td>
+                <td>@item.MiddleName</td>
+                <td>@item.AboutTeam</td>
+                <td>@item.Position?.Name</td>
+                <td>
+                    <a href="@Url.Action("EditTeam", "Home", new{id=item.Id})">edit</a>
+                </td>
+                <td>
+                    <a href="@Url.Action("DeleteTeam", "Home", new{id=item.Id})">delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<hr />
+<a href="@Url.Action("EditTeam", "Home")" class="btn btn-default">Add Team</a>
