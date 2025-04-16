@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Hotel.Atr3.Admin.Models
+namespace Hotel.Atr3.RealPortal.Models
 {
     [Table("atr3Position")]
 	public class Position
@@ -11,5 +11,6 @@ namespace Hotel.Atr3.Admin.Models
 
         public string Name { get; set; }
         public string Description { get; set; }
+        public ICollection<Team> Teams { get; set; }
     }
 }

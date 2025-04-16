@@ -1,10 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Hotel.Atr3.Admin.Models
+namespace Hotel.Atr3.WebApi.Model
 {
     [Table("atr3Position")]
-	public class Position
-	{
+    public class Position
+    {
         public int Id { get; set; }
         public DateTime CreateAt { get; set; }
         public string CreatedBy { get; set; }

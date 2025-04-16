@@ -1,4 +1,4 @@
-﻿@model List<TeamViewModel>
+﻿@model List<Team>
 @{
     ViewData["Title"] = "Our Staff";
     ViewData["Description"] = "A quality room of hotel ATR with sea or mountain view";
@@ -20,102 +20,25 @@
             </div>
         </div>
         <div class="row">
-            @foreach (TeamViewModel item in Model)
+            @foreach (Team item in Model)
             {
+                string base64 = Convert.ToBase64String(item.ImagePath);
+                string imageSrc = $"data:image/jpg;base64,{base64}";
+
+
                 <div class="col-md-4 col-sm-4">
                     <div class="single-team">
-                        <div class="team-image"><img src="@Url.Content(item.ImagePath)" alt=""></div>
+                        <div class="team-image">
+                            <img src="@imageSrc" alt="">
+                            </div>
                         <div class="team-hover">
                             <h4>@item.FullName</h4>
-                            <span class="block">@item.Position</span>
-                            <p>@item.Description</p>
-                            <div class="team-links">
-                                @foreach (var link in item.TeamLinks)
-                                {
-                                    <a href="@link.URL"><i class="zmdi @link.LinkType"></i></a>
-                                }
-                            </div>
+                            <span class="block">@item.Position?.Name</span>
+                            <p>@item.AboutTeam</p>
                         </div>
                     </div>
                 </div>
             }
-
-           
-            <div class="col-md-4 col-sm-4">
-                <div class="single-team">
-                    <div class="team-image"><img src="img/team/2.jpg" alt=""></div>
-                    <div class="team-hover">
-                        <h4>Them Jonse</h4>
-                        <span class="block">( Manager )</span>
-                        <p>Lorem ipsupm dolor sit amet, conse ctetur adipisicing elit, sed do eiumthgtipsupm dolor sit amet conse</p>
-                        <div class="team-links">
-                            <a href="https://www.facebook.com/"><i class="zmdi zmdi-facebook"></i></a>
-                            <a href="https://twitter.com/"><i class="zmdi zmdi-twitter"></i></a>
-                            <a href="https://www.pinterest.com/"><i class="zmdi zmdi-pinterest"></i></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 col-sm-4">
-                <div class="single-team">
-                    <div class="team-image"><img src="img/team/3.jpg" alt=""></div>
-                    <div class="team-hover">
-                        <h4>Marry Gomej</h4>
-                        <span class="block">( Leader )</span>
-                        <p>Lorem ipsupm dolor sit amet, conse ctetur adipisicing elit, sed do eiumthgtipsupm dolor sit amet conse</p>
-                        <div class="team-links">
-                            <a href="https://www.facebook.com/"><i class="zmdi zmdi-facebook"></i></a>
-                            <a href="https://twitter.com/"><i class="zmdi zmdi-twitter"></i></a>
-                            <a href="https://www.pinterest.com/"><i class="zmdi zmdi-pinterest"></i></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 col-sm-4">
-                <div class="single-team">
-                    <div class="team-image"><img src="img/team/4.jpg" alt=""></div>
-                    <div class="team-hover">
-                        <h4>Noah Jackson</h4>
-                        <span class="block">( Officer )</span>
-                        <p>Lorem ipsupm dolor sit amet, conse ctetur adipisicing elit, sed do eiumthgtipsupm dolor sit amet conse</p>
-                        <div class="team-links">
-                            <a href="https://www.facebook.com/"><i class="zmdi zmdi-facebook"></i></a>
-                            <a href="https://twitter.com/"><i class="zmdi zmdi-twitter"></i></a>
-                            <a href="https://www.pinterest.com/"><i class="zmdi zmdi-pinterest"></i></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 col-sm-4">
-                <div class="single-team">
-                    <div class="team-image"><img src="img/team/5.jpg" alt=""></div>
-                    <div class="team-hover">
-                        <h4>Emma Madison</h4>
-                        <span class="block">( Manager )</span>
-                        <p>Lorem ipsupm dolor sit amet, conse ctetur adipisicing elit, sed do eiumthgtipsupm dolor sit amet conse</p>
-                        <div class="team-links">
-                            <a href="https://www.facebook.com/"><i class="zmdi zmdi-facebook"></i></a>
-                            <a href="https://twitter.com/"><i class="zmdi zmdi-twitter"></i></a>
-                            <a href="https://www.pinterest.com/"><i class="zmdi zmdi-pinterest"></i></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 col-sm-4">
-                <div class="single-team">
-                    <div class="team-image"><img src="img/team/1.jpg" alt=""></div>
-                    <div class="team-hover">
-                        <h4>Benjamin Aiden</h4>
-                        <span class="block">( Leader )</span>
-                        <p>Lorem ipsupm dolor sit amet, conse ctetur adipisicing elit, sed do eiumthgtipsupm dolor sit amet conse</p>
-                        <div class="team-links">
-                            <a href="https://www.facebook.com/"><i class="zmdi zmdi-facebook"></i></a>
-                            <a href="https://twitter.com/"><i class="zmdi zmdi-twitter"></i></a>
-                            <a href="https://www.pinterest.com/"><i class="zmdi zmdi-pinterest"></i></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
             <div class="col-md-12 fix">
                 <div class="pagination-content text-center">
                     <ul class="pagination">

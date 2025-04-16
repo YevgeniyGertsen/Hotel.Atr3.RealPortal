@@ -148,7 +148,7 @@ app.Use(async (context, next) =>
 });
 
 //app.UseMiddleware<UseWorkTime>();
-app.UseWorkTime();
+//app.UseWorkTime();
 
 
 #region routing templates

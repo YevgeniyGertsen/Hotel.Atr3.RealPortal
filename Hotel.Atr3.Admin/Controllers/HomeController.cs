@@ -16,9 +16,18 @@ namespace Hotel.Atr3.Admin.Controllers
 			_db = db;
 		}
 
-		public IActionResult Position()
+		public async Task<IActionResult> Position()
 		{
-			var positions = _db.Positions.ToList();
+			List<Position> positions = new List<Position>();
+
+			using (var client = new HttpClient())
+			{
+				using (var request = await client.GetAsync("http://localhost:5258/api/Position"))
+				{
+					string result = await request.Content.ReadAsStringAsync();
+					positions = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Position>>(result);
+                }
+			}
 
 			return View(positions);
 		}
@@ -90,37 +99,42 @@ namespace Hotel.Atr3.Admin.Controllers
 			{
 				var team = _db.Teams.Find(id);
 				if (team != null)
-				{
 					tvm.Team = team;
-					return View(team);
-				}
 			}
 
 			return View(tvm);
 		}
 
 		[HttpPost]
-		public IActionResult EditTeam(Team team)
+		public IActionResult EditTeam(IFormFile ImagePath, Team team)
 		{
-			if(team.Id!=0)
+			var memoryStream = new MemoryStream();
+			ImagePath.CopyTo(memoryStream);
+
+			if (team.Id != 0)
 			{
 				var _team = _db.Teams.Find(team.Id);
-                if (_team!=null)
-                {
+				if (_team != null)
+				{
 					_team.FirstName = team.FirstName;
 					_team.SecondName = team.SecondName;
 					_team.MiddleName = team.MiddleName;
 					_team.AboutTeam = team.AboutTeam;
 					_team.PositionId = team.PositionId;
-					team.ImagePath = "";
+
+					if (ImagePath != null)
+						team.ImagePath = memoryStream.ToArray();
+
 					_db.SaveChanges();
-                }
-            }
+				}
+			}
 			else
 			{
 				team.CreateAt = DateTime.Now;
 				team.CreatedBy = "";
-				team.ImagePath = "";
+
+				if (ImagePath != null)
+					team.ImagePath = memoryStream.ToArray();
 				_db.Teams.Add(team);
 				_db.SaveChanges();
 			}
