@@ -1,4 +1,4 @@
-using Hotel.Atr3.Admin.Models;
+﻿using Hotel.Atr3.Admin.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
@@ -106,7 +106,7 @@ namespace Hotel.Atr3.Admin.Controllers
 		}
 
 		[HttpPost]
-		public IActionResult EditTeam(IFormFile ImagePath, Team team)
+		public async Task<IActionResult> EditTeam(IFormFile ImagePath, Team team)
 		{
 			var memoryStream = new MemoryStream();
 			ImagePath.CopyTo(memoryStream);
@@ -130,13 +130,31 @@ namespace Hotel.Atr3.Admin.Controllers
 			}
 			else
 			{
-				team.CreateAt = DateTime.Now;
-				team.CreatedBy = "";
+				using (var client = new HttpClient())
+				{
+					using (var content = new MultipartFormDataContent())
+					{
+						//прикрепляем к закголовку картинку
+                        var fileBites = memoryStream.ToArray();
+                        var fileContent = new ByteArrayContent(fileBites);
 
-				if (ImagePath != null)
-					team.ImagePath = memoryStream.ToArray();
-				_db.Teams.Add(team);
-				_db.SaveChanges();
+						content.Add(fileContent, "file", ImagePath.FileName);
+
+						//прикрепляем к заголовку свойства класса
+						content.Add(new StringContent(team.FirstName), "FirstName");
+						content.Add(new StringContent(team.SecondName), "SecondName");
+						content.Add(new StringContent(team.MiddleName), "MiddleName");
+						content.Add(new StringContent(team.AboutTeam), "AboutTeam");
+						content.Add(new StringContent(team.PositionId.ToString()), "PositionId");
+
+                        using (var request = await client.PostAsync("http://localhost:5193/api/Team", 
+							content))
+                        {
+							var result = await request.Content.ReadAsStringAsync();
+
+                        }
+                    }					
+				}
 			}
 			return RedirectToAction("Team");
 		}
