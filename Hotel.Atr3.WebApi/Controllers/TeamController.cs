@@ -8,24 +8,18 @@ namespace Hotel.Atr3.WebApi.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
-    public class PositionController : ControllerBase
+    public class TeamController : ControllerBase
     {
         private readonly AppDbContext _db;
-        public PositionController(AppDbContext db)
+        public TeamController(AppDbContext db)
         {
             _db = db;
         }
 
         [HttpGet]
-        public List<Position> Get()
+        public List<Team> Get()
         {
-            return _db.Positions.ToList();
-        }
-
-        [HttpGet("[action]/{id:int}")]
-        public Position Get(int id)
-        {
-            return _db.Positions.Find(id);
+            return _db.Teams.ToList();
         }
     }
 }

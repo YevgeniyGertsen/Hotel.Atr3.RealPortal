@@ -28,6 +28,8 @@ builder.Services.AddTransient<IMessage, SmsSender>();
 //builder.Services.AddTransient<IMessage, EmailSender>();
 builder.Services.AddScoped<ILanguageService, LanguageService>();
 builder.Services.AddScoped<ILocalizationService, LocalizationService>();
+
+builder.Services.AddScoped<TokenService>();
 #endregion
 
 builder.Services.AddDbContext<AppDbContext>
@@ -114,7 +116,7 @@ builder.Host.UseSerilog();
 
 
 
-
+builder.WebHost.UseUrls("http://localhost:5260");
 
 var app = builder.Build();
 

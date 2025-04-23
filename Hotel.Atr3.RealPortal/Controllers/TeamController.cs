@@ -2,7 +2,9 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using System;
+using System.Net.Http.Headers;
 
 namespace Hotel.Atr3.RealPortal.Controllers
 {
@@ -14,13 +16,31 @@ namespace Hotel.Atr3.RealPortal.Controllers
             _db = db;
 		}
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var teams = _db.Teams
-                .Include(i => i.Position)
-                .ToList();
+            List<Team> teams = new List<Team>();
+            using (var client = new HttpClient())
+            {
+                var token = Request.Cookies["token"];
+
+                client.DefaultRequestHeaders.Authorization =
+                    new AuthenticationHeaderValue("Bearer", token);
+
+                using (var responce = await client.GetAsync("http://localhost:5258/api/Team"))
+                {
+                    var result = await responce.Content.ReadAsStringAsync();
+                    teams = JsonConvert.DeserializeObject<List<Team>>(result);
+                }
+            }
 
             return View(teams);
+
+
+            //var teams = _db.Teams
+            //    .Include(i => i.Position)
+            //    .ToList();
+
+            //return View(teams);
 
 			//#region GetTeamsFromDataBase
 			//List<TeamViewModel> teams = new List<TeamViewModel>();
